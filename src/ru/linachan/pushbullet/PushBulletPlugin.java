@@ -4,6 +4,8 @@ import ru.linachan.yggdrasil.component.YggdrasilPlugin;
 
 public class PushBulletPlugin extends YggdrasilPlugin {
 
+    private PushBulletClient client;
+
     @Override
     protected void setUpDependencies() {
 
@@ -11,7 +13,10 @@ public class PushBulletPlugin extends YggdrasilPlugin {
 
     @Override
     protected void onInit() {
+        String apiKey = core.getConfig("PushBulletAPIKey", null);
 
+        client = new PushBulletClient(core, apiKey);
+        client.setUpDevice("Yggdrasil");
     }
 
     @Override
@@ -21,6 +26,10 @@ public class PushBulletPlugin extends YggdrasilPlugin {
 
     @Override
     protected boolean executeTests() {
-        return false;
+        return true;
+    }
+
+    public PushBulletClient getClient() {
+        return client;
     }
 }
