@@ -4,6 +4,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.linachan.pushbullet.objects.PushBulletDevice;
 import ru.linachan.pushbullet.objects.PushBulletDeviceIcon;
 import ru.linachan.pushbullet.objects.PushBulletPush;
@@ -28,6 +30,8 @@ public class PushBulletClient {
     private final String API_VERSION = "v2";
 
     private PushBulletDevice device;
+
+    private static Logger logger = LoggerFactory.getLogger(PushBulletClient.class);
 
     public PushBulletClient(YggdrasilCore yggdrasilCore, String apiKey) {
         core = yggdrasilCore;
@@ -65,7 +69,7 @@ public class PushBulletClient {
 
             return (JSONObject) new JSONParser().parse(new InputStreamReader(apiConnection.getInputStream()));
         } catch (IOException | ParseException e) {
-            core.logException(e);
+            logger.trace("Unable to call PushBullet API", e);
         }
 
         return null;
