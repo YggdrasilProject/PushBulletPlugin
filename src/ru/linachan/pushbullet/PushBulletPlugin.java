@@ -17,6 +17,9 @@ public class PushBulletPlugin extends YggdrasilPlugin {
 
         client = new PushBulletClient(core, apiKey);
         client.setUpDevice("Yggdrasil");
+
+        PushBulletProvider provider = new PushBulletProvider();
+        core.getNotificationManager().registerProvider(provider);
     }
 
     @Override
