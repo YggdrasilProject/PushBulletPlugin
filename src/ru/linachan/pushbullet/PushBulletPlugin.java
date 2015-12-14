@@ -1,6 +1,7 @@
 package ru.linachan.pushbullet;
 
 import ru.linachan.yggdrasil.component.YggdrasilPlugin;
+import ru.linachan.yggdrasil.notification.YggdrasilNotificationManager;
 
 public class PushBulletPlugin extends YggdrasilPlugin {
 
@@ -13,13 +14,13 @@ public class PushBulletPlugin extends YggdrasilPlugin {
 
     @Override
     protected void onInit() {
-        String apiKey = core.getConfig("PushBulletAPIKey", null);
+        String apiKey = core.getConfig().getString("push_bullet.api.key", null);
 
         client = new PushBulletClient(core, apiKey);
         client.setUpDevice("Yggdrasil");
 
         PushBulletProvider provider = new PushBulletProvider();
-        core.getNotificationManager().registerProvider(provider);
+        core.getManager(YggdrasilNotificationManager.class).registerProvider(provider);
     }
 
     @Override
